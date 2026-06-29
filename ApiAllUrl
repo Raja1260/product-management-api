@@ -1,0 +1,509 @@
+# 🌐 Product Management API Documentation
+
+> Project: Product Management API
+> Version: 1.0.0
+> Base URL:
+>
+> http://localhost:5000/api
+
+---
+
+# Authentication
+
+Some APIs require authentication.
+
+Use:
+
+Authorization: Bearer YOUR_JWT_TOKEN
+
+Example:
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+---
+
+# User APIs
+
+## 1. Register User
+
+Method
+
+POST
+
+URL
+
+http://localhost:5000/api/users/register
+
+Body
+
+```json
+{
+  "name": "Rahul",
+  "email": "rahul@gmail.com",
+  "password": "123456"
+}
+```
+
+Response
+
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "User registered successfully"
+}
+```
+
+---
+
+## 2. Login User
+
+Method
+
+POST
+
+URL
+
+http://localhost:5000/api/users/login
+
+Body
+
+```json
+{
+  "email": "rahul@gmail.com",
+  "password": "123456"
+}
+```
+
+Response
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "name": "Rahul",
+      "email": "rahul@gmail.com",
+      "role": "admin"
+    },
+    "token": "JWT_TOKEN"
+  }
+}
+```
+
+---
+
+## 3. User Profile (Protected)
+
+Method
+
+GET
+
+URL
+
+http://localhost:5000/api/users/profile
+
+Authorization
+
+Bearer Token
+
+Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "...",
+    "name": "Rahul",
+    "email": "rahul@gmail.com",
+    "role": "admin"
+  }
+}
+```
+
+---
+
+# Product APIs
+
+## 1. Create Product (Admin Only)
+
+Method
+
+POST
+
+URL
+
+http://localhost:5000/api/products
+
+Authorization
+
+Bearer Token
+
+Body
+
+```json
+{
+  "name": "Canon EOS R8",
+  "description": "Professional mirrorless camera",
+  "price": 35000,
+  "category": "Camera",
+  "brand": "Canon",
+  "stock": 20,
+  "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+}
+```
+
+Response
+
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "Product created successfully"
+}
+```
+
+---
+
+## 2. Get All Products
+
+Method
+
+GET
+
+URL
+
+http://localhost:5000/api/products
+
+---
+
+## 3. Get Product By ID
+
+Method
+
+GET
+
+URL
+
+http://localhost:5000/api/products/:id
+
+Example
+
+http://localhost:5000/api/products/6a37cd3362f228e534755de1
+
+---
+
+## 4. Update Product (Admin Only)
+
+Method
+
+PUT
+
+URL
+
+http://localhost:5000/api/products/:id
+
+Example
+
+http://localhost:5000/api/products/6a37cd3362f228e534755de1
+
+Authorization
+
+Bearer Token
+
+Body
+
+```json
+{
+  "name": "Canon EOS R8 Updated",
+  "description": "Updated Camera",
+  "price": 40000,
+  "category": "Camera",
+  "brand": "Canon",
+  "stock": 15,
+  "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+}
+```
+
+---
+
+## 5. Delete Product (Admin Only)
+
+Method
+
+DELETE
+
+URL
+
+http://localhost:5000/api/products/:id
+
+Example
+
+http://localhost:5000/api/products/6a37cd3362f228e534755de1
+
+Authorization
+
+Bearer Token
+
+---
+
+# Pagination
+
+Get First Page
+
+GET
+
+http://localhost:5000/api/products?page=1
+
+---
+
+Get Second Page
+
+GET
+
+http://localhost:5000/api/products?page=2
+
+---
+
+Limit Results
+
+GET
+
+http://localhost:5000/api/products?page=1&limit=5
+
+---
+
+Pagination Example
+
+GET
+
+http://localhost:5000/api/products?page=2&limit=10
+
+---
+
+# Search
+
+Search by Name
+
+GET
+
+http://localhost:5000/api/products?search=iphone
+
+Search Camera
+
+GET
+
+http://localhost:5000/api/products?search=camera
+
+---
+
+# Category Filter
+
+GET
+
+http://localhost:5000/api/products?category=Camera
+
+GET
+
+http://localhost:5000/api/products?category=Mobile
+
+GET
+
+http://localhost:5000/api/products?category=Laptop
+
+---
+
+# Brand Filter
+
+GET
+
+http://localhost:5000/api/products?brand=Apple
+
+GET
+
+http://localhost:5000/api/products?brand=Canon
+
+GET
+
+http://localhost:5000/api/products?brand=Samsung
+
+---
+
+# Price Filter
+
+Minimum Price
+
+GET
+
+http://localhost:5000/api/products?minPrice=10000
+
+Maximum Price
+
+GET
+
+http://localhost:5000/api/products?maxPrice=50000
+
+Range
+
+GET
+
+http://localhost:5000/api/products?minPrice=10000&maxPrice=50000
+
+---
+
+# Active Products
+
+GET
+
+http://localhost:5000/api/products?isActive=true
+
+Inactive Products
+
+GET
+
+http://localhost:5000/api/products?isActive=false
+
+---
+
+# Combined Query Example
+
+GET
+
+http://localhost:5000/api/products?page=1&limit=5&search=iphone&category=Mobile&brand=Apple
+
+---
+
+# RBAC (Role Based Access Control)
+
+| API | Public | User | Admin |
+|------|--------|------|--------|
+| Register | ✅ | ✅ | ✅ |
+| Login | ✅ | ✅ | ✅ |
+| Profile | ❌ | ✅ | ✅ |
+| Get Products | ✅ | ✅ | ✅ |
+| Get Product By ID | ✅ | ✅ | ✅ |
+| Create Product | ❌ | ❌ | ✅ |
+| Update Product | ❌ | ❌ | ✅ |
+| Delete Product | ❌ | ❌ | ✅ |
+
+---
+
+# Authentication Header
+
+For Protected APIs
+
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
+Example
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+
+---
+
+# API Response Format
+
+Success Response
+
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Success",
+  "data": {}
+}
+```
+
+Error Response
+
+```json
+{
+  "success": false,
+  "message": "Something went wrong",
+  "timestamp": "2026-06-21T11:38:27.760Z"
+}
+```
+
+---
+
+# Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- JWT Authentication
+- bcrypt
+- Zod Validation
+- Repository Pattern
+- Service Layer
+- MVC Architecture
+- Express Middleware
+- Custom Error Handling
+- Pagination
+- Search
+- Filtering
+- RBAC (Role Based Access Control)
+
+---
+
+# Project Status
+
+✅ Project Setup
+
+✅ MongoDB Atlas
+
+✅ CRUD API
+
+✅ Repository Pattern
+
+✅ Service Layer
+
+✅ MVC Architecture
+
+✅ Zod Validation
+
+✅ Global Error Handler
+
+✅ Async Handler
+
+✅ JWT Authentication
+
+✅ Password Hashing
+
+✅ Authorization (RBAC)
+
+✅ Protected Routes
+
+✅ Pagination
+
+✅ Search
+
+✅ Filter
+
+✅ Filter
+
+✅  Refresh Token
+
+✅  Forgot Password
+
+⬜ Image Upload (Cloudinary)
+
+⬜ Swagger Documentation
+
+⬜ Unit Testing
+
+⬜ Docker
+
+⬜ Deployment
+
+⬜ React Frontend
+
+---
+
+**Last Updated:** June 2026

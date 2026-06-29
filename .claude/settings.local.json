@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\('dotenv'\\).config\\(\\); require\\('./src/app'\\); console.log\\('✅ app.js loads cleanly — all modules resolve'\\);\")",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
