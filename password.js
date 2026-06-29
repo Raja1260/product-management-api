@@ -1,17 +1,4 @@
 
-// PORT=5000
-
-// # MONGODB_URI=mongodb://127.0.0.1:27017/product_management
-
-// JWT_SECRET=my_super_secret_key
-
-
-
-// # MONGODB_USERNAME="rajayadav12061_db_user"
-// # MONGODB_PASSWORD="0Oc2OTe6zyThnLlz"
-// MONGODB_URI="mongodb+srv://rajayadav12061_db_user:0Oc2OTe6zyThnLlz@product-management-clus.hlbr9a4.mongodb.net"
-
-
 
 // # 📚 Concept Before Coding
 
